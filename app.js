@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-import { Button } from "@axiom/button/react/Button.js";
-import { Select, Option } from "@axiom/select/react";
-import { LionForm } from "./LionForm";
-
-import "@axiom/select/define.js";
+import { LionSelectRich } from "./LionSelectRich";
+import { LionOption } from "./LionOption";
 
 const colors = [
   {
@@ -25,72 +22,66 @@ const colors = [
   },
 ];
 
-function UsesButton() {
-  const [showMessage, setShowMessage] = useState(false);
+function WithChoiceValue() {
   return (
-    <>
-      <Button onClick={() => setShowMessage((s) => !s)} title="Hello React">
-        Ax Button
-      </Button>
-      {showMessage && <aside>Yo!</aside>}
-    </>
-  );
-}
-
-function UsesSelect() {
-  return (
-    <Select
+    <LionSelectRich
       name="favoriteColors"
       label="Choose a color"
-      //   modelValue={{ value:'#00ff7f', checked: false }}
       onModelValueChange={(event) => {
-        console.log("onModelValueChange:detail: ", event.detail);
-        console.log("onModelValueChange:modelValue: ", event.target.modelValue);
         console.log(
-          "onModelValueChange:choiceValue: ",
-          event.target.choiceValue
+          "WithChoiceValue:onModelValueChange:modelValue: ",
+          event.target.modelValue
         );
       }}
     >
       {colors.map((color) => (
-        <Option
-          key={color.value}
-          choiceValue={color.value}
-          modelValue={{ value: color.value, checked: false }}
-        >
+        <LionOption key={color.value} choiceValue={color.value}>
           {color.label}
-        </Option>
+        </LionOption>
       ))}
-    </Select>
+    </LionSelectRich>
   );
 }
 
+function WithModelValue() {
+  return (
+    <LionSelectRich
+      name="favoriteColors"
+      label="Choose a color"
+      onModelValueChange={(event) => {
+        console.log(
+          "WithModelValue:onModelValueChange:modelValue: ",
+          event.target.modelValue
+        );
+      }}
+    >
+      {colors.map((color) => (
+        <LionOption
+          key={color.value}
+          modelValue={{ value: color.value, checked: false }}
+        >
+          {color.label}
+        </LionOption>
+      ))}
+    </LionSelectRich>
+  );
+}
 function App() {
   return (
     <main>
-      <h1>ax-web</h1>
       <section>
-        <h2>ax-button</h2>
-        <UsesButton />
+        <p>
+          When the modelValue is set on the options object the model value in
+          onModelValueChange is correctly set.
+        </p>
+        <WithModelValue />
       </section>
       <section>
-        <h2>ax-select / ax-option</h2>
-        <UsesSelect />
-      </section>
-      <section>
-        <h2>Issues</h2>
-        <ul>
-          <li>
-            Lion form errors see{" "}
-            <a href="lit-and-friends.slack.com/archives/CJGFWJN9J/p1622445542027800">
-              here
-            </a>
-          </li>
-          <li>
-            Select: choiceValue does not work a workaround might be to use
-            modelvalue.
-          </li>
-        </ul>
+        <p>
+          However When the choiceValue is used instead the model value in
+          onModelValueChange is undefined
+        </p>
+        <WithChoiceValue />
       </section>
     </main>
   );
