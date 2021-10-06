@@ -1,0 +1,22 @@
+{
+  "name": "esbuild",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "esbuild app.js --bundle --outfile=out.js --loader:.js=jsx --sourcemap --watch",
+    "build": "esbuild app.js --bundle --outfile=out.js --loader:.js=jsx --sourcemap"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@axiom/button": "^1.2.1",
+    "@axiom/select": "^0.0.1",
+    "@lion/form": "^0.12.5",
+    "@lit-labs/react": "^1.0.0",
+    "esbuild": "^0.13.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
